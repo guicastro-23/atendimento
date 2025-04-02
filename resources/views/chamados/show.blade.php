@@ -1,6 +1,17 @@
 @extends('layouts.admin')
 
 @section('content')
+
+    <div class="card mt-4 mb-4 border-light shadow">
+        <div class="card-header d-flex justify-content-between">
+            <span>Visualizar Chamado</span>
+            <span>
+                <a href="{{route('chamado.index')}}">
+                    <button type="button" class="btn btn-info btn-sm">Listar</button>
+                </a>
+            </span>
+        </div>
+    </div>
     
     <a href="{{route('chamado.index')}}">Listar</a>
     <h2>Informações do Chamado</h2>

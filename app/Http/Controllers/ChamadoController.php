@@ -74,5 +74,11 @@ class ChamadoController extends Controller
         return view('chamados.show', compact('chamado'));
     }
 
+    public function destroy(Chamado $chamado)
+    {
+       $chamado->delete();
+       return redirect()->route('chamado.index')->with('success', 'Conta excluida com sucesso');
+    }
+
 
 }

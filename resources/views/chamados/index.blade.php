@@ -10,9 +10,9 @@
                     <button type="button" class="btn btn-success btn-sm">Novo Chamado</button>
                 </a>
             </span>
-          </div>
+        </div>
 
-          <div class="card-body">
+        <div class="card-body">
             <table class="table">
                 <thead>
                   <tr>
@@ -36,10 +36,16 @@
                             <td>{{\Carbon\Carbon::parse($chamado->data_criacao)->format('d/m/Y') }}</td>
                             <td>{{\Carbon\Carbon::parse($chamado->prazo_solucao)->format('d/m/Y') }}</td>
                             <td>{{\Carbon\Carbon::parse($chamado->data_solucao)->format('d/m/Y') }}</td>
-                            <td>
+                            <td class="d-md-flex justify-content-center">
                                 <a href="{{route('chamado.show', ['chamado' => $chamado->id])}}">
-                                    <button type="button" class="btn btn-primary bt-sm">Visualizar</button>
-                                    </a>
+                                    <button type="button" class="btn btn-primary bt-sm me-1">Visualizar</button>
+                                </a>
+                                <form action="{{route('chamado.destroy', ['chamado' => $chamado->id])}}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-danger bt-sm me-1"
+                                    onclick="return confirm('Tem certeza que deseja apagar o chamado?')">Excluir</button>
+                                </form>
                             </td>
                         </tr>
                     @empty
@@ -47,8 +53,14 @@
                     @endforelse 
                 </tbody>
             </table>  
-          </div>
+        </div>
     </div>
+
+    @if (session('success'))
+        <p style="color: #082;">
+            {{session('success')}}
+        </p>
+    @endif
     @forelse ($chamados as $chamado)
         <tr>
             <td></td>
@@ -66,6 +78,8 @@
 
                     <button type="submit">Salvar</button>
                 </form>
+
+               
             </td>
             <a href="{{route('chamado.show', ['chamado' => $chamado->id])}}">Visualizar</a>
         </tr>

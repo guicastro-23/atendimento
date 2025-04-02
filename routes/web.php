@@ -25,5 +25,5 @@ Route::get('/create-chamado', [ChamadoController::class, 'create']) ->name('cham
 Route::post('/store-chamado', [ChamadoController::class, 'store']) ->name('chamado.store');
 Route::put('/chamados/{id}', [ChamadoController::class, 'update'])->name('chamado.update');
 Route::get('/show-chamado/{chamado}', [ChamadoController::class, 'show'])->name('chamado.show');
-Route::delete('/destroy-chamado', [ChamadoController::class, 'destroy'])->name('chamado.destroy');
+Route::delete('/destroy-chamado/{chamado}', [ChamadoController::class, 'destroy'])->name('chamado.destroy');
 
