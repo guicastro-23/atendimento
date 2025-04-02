@@ -23,3 +23,7 @@ Route::post('/store-situacao', [SituacaoController::class, 'store']) ->name('sit
 Route::get('/index-chamado', [ChamadoController::class, 'index']) ->name('chamado.index');
 Route::get('/create-chamado', [ChamadoController::class, 'create']) ->name('chamado.create');
 Route::post('/store-chamado', [ChamadoController::class, 'store']) ->name('chamado.store');
+Route::put('/chamados/{id}', [ChamadoController::class, 'update'])->name('chamado.update');
+Route::get('/show-chamado/{chamado}', [ChamadoController::class, 'show'])->name('chamado.show');
+Route::delete('/destroy-chamado', [ChamadoController::class, 'destroy'])->name('chamado.destroy');
+

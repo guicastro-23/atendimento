@@ -11,7 +11,10 @@ class ChamadoController extends Controller
 {
     public function index()
     {
-        return view('chamados.index');
+        // Listar os registros de chamados
+        $chamados = Chamado::orderByDesc('created_at')->get();
+        $situacoes = Situacao::all();
+        return view('chamados.index', compact('chamados', 'situacoes'));
     }
 
     public function create()
@@ -35,8 +38,40 @@ class ChamadoController extends Controller
         $validated['data_criacao'] = now();
 
         Chamado::create($validated);
-        return redirect()->route('chamado.index')->with('success', 'Chamado criado com sucesso!');
+        return redirect()->route('chamados.index')->with('success', 'Chamado criado com sucesso!');
 
+    }
+
+    public function update(Request $request, $id)
+    {
+        $chamado = Chamado::findOrFail($id);
+
+        // Buscar o ID correto da situação com base no status
+        $situacao = Situacao::where('status', $request->situacao_id)->first();
+
+        if (!$situacao) {
+            return redirect()->route('chamados.index')->with('error', 'Situação inválida!');
+        }
+
+        // Atualiza a situação
+        $chamado->situacao_id = $situacao->id;
+
+        // Se for resolvido, preenche a data de solução
+        if ($situacao->status === 'Resolvido') {
+            $chamado->data_solucao = now();
+        } else {
+            $chamado->data_solucao = null; 
+        }
+
+        $chamado->save();
+
+        return redirect()->route('chamado.index')->with('success', 'Chamado atualizado com sucesso!');
+    }
+
+    public function show(Chamado $chamado)
+    {
+       
+        return view('chamados.show', compact('chamado'));
     }
 
 

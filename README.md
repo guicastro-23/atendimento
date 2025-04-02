@@ -5,6 +5,7 @@
 - **PHP:** Versão 8.0 ou superior
 - **Composer:** 
 - **MySQL:** 
+- **Node.js** 
 
 
 ### 2. Configuração do Ambiente
@@ -16,6 +17,10 @@
 
 ```
 composer install 
+```
+Instalar as dependencias do Node.Js
+```
+npm install
 ```
 
 3. Duplicar o arquivo ".env.example" e renomear para ".env"
@@ -50,5 +55,25 @@ Para adicionar os status de situações criei uma seeder para a tabela
 php artisan db:seed       
 ```
 
+8. Instalar o Vite 
 
-  
+```
+npm install
+```
+
+9. Instalar o Bootstrap
+```
+npm i --save bootstrap @popperjs/core
+```
+Instalar o sass
+```
+npm i --save-dev sass
+```
+Iniciar o projeto criado com laravel 
+```
+php artisan
+```
+Executar as bibliotecas Node.js 
+```
+npm run dev
+```
