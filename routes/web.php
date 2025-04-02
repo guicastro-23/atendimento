@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ChamadoController;
 use App\Http\Controllers\SituacaoController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,10 @@ ROUTE::post('/store-categoria', [CategoriaController::class, 'store']) -> name('
 
 //Situações
 Route::get('/index-situacao', [SituacaoController::class, 'index']) ->name('situacao.index');
-Route::post('/create-situacao', [SituacaoController::class, 'create']) ->name('situacao.create');
+Route::get('/create-situacao', [SituacaoController::class, 'create']) ->name('situacao.create');
 Route::post('/store-situacao', [SituacaoController::class, 'store']) ->name('situacao.store');
 
+//Chamados 
+Route::get('/index-chamado', [ChamadoController::class, 'index']) ->name('chamado.index');
+Route::get('/create-chamado', [ChamadoController::class, 'create']) ->name('chamado.create');
+Route::post('/store-chamado', [ChamadoController::class, 'store']) ->name('chamado.store');

@@ -18,34 +18,36 @@
 composer install 
 ```
 
-3.Duplicar o arquivo ".env.example" e renomear para ".env"
+3. Duplicar o arquivo ".env.example" e renomear para ".env"
 
-4.Gerar a chave 
+4. Gerar a chave 
 
 ```
 php artisan key:generate
 ```
-5.Configure o Banco de Dados
+5. Configure o Banco de Dados
 
 No arquivo .env, defina suas credenciais do banco de dados:
 
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=nome_do_banco
-DB_USERNAME=usuario
-DB_PASSWORD=senha
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=nome_do_banco
+    DB_USERNAME=usuario
+    DB_PASSWORD=senha
 
-6.Execute as Migrações
+6. Execute as Migrações
 
 ```
 php artisan migrate
 ```
 
-7.Executar o seeder 
-    Para adicionar os status de situações criei uma seeder para a tabela 
+7. Executar o seeder 
+
+Para adicionar os status de situações criei uma seeder para a tabela 
+
 ```
-    php artisan db:seed       
+php artisan db:seed       
 ```
 
 

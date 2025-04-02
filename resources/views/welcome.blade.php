@@ -8,7 +8,7 @@
 
     </head>
     <body>
-        <h1>Chamados</h1>
-        <a href="">Cadastrar</a>
+        <h1>SLA</h1>
+        <a href="{{route('chamado.index')}}">Listar os Chamados</a>
     </body>
 </html>
