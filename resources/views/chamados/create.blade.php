@@ -14,7 +14,7 @@
 
         @if(session('success'))
             <div class="alert alert-success m-3" role="alert">
-                {{session('sucess')}}
+                {{session('success')}}
             </div>
         @endif
 
@@ -63,7 +63,6 @@
    
 
     <script>
-       
         document.addEventListener('DOMContentLoaded', function() {
             const today = new Date();
             today.setDate(today.getDate() + 3);

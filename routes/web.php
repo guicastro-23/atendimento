@@ -5,9 +5,8 @@ use App\Http\Controllers\ChamadoController;
 use App\Http\Controllers\SituacaoController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', [ChamadoController::class, 'percentual'])->name('welcome');
 
 //Categorias 
 ROUTE::get('/index-categoria', [CategoriaController::class, 'index']) -> name('categoria.index');
@@ -23,7 +22,11 @@ Route::post('/store-situacao', [SituacaoController::class, 'store']) ->name('sit
 Route::get('/index-chamado', [ChamadoController::class, 'index']) ->name('chamado.index');
 Route::get('/create-chamado', [ChamadoController::class, 'create']) ->name('chamado.create');
 Route::post('/store-chamado', [ChamadoController::class, 'store']) ->name('chamado.store');
-Route::put('/chamados/{id}', [ChamadoController::class, 'update'])->name('chamado.update');
 Route::get('/show-chamado/{chamado}', [ChamadoController::class, 'show'])->name('chamado.show');
 Route::delete('/destroy-chamado/{chamado}', [ChamadoController::class, 'destroy'])->name('chamado.destroy');
+Route::put('/chamados/{chamado}/situacao', [ChamadoController::class, 'atualizarSituacao'])
+->name('chamado.atualizar-situacao');
+
+
+
 

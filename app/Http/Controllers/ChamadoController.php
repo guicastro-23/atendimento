@@ -34,7 +34,7 @@ class ChamadoController extends Controller
             'situacao_id' => 'required|exists:situacoes,id'
         ]);
 
-        // Adiciona a data de criação automática
+       
         $validated['data_criacao'] = now();
 
         Chamado::create($validated);
@@ -42,36 +42,10 @@ class ChamadoController extends Controller
 
     }
 
-    public function update(Request $request, $id)
-    {
-        $chamado = Chamado::findOrFail($id);
-
-        // Buscar o ID correto da situação com base no status
-        $situacao = Situacao::where('status', $request->situacao_id)->first();
-
-        if (!$situacao) {
-            return redirect()->route('chamados.index')->with('error', 'Situação inválida!');
-        }
-
-        // Atualiza a situação
-        $chamado->situacao_id = $situacao->id;
-
-     
-        if ($situacao->status === 'Resolvido') {
-            $chamado->data_solucao = now();
-        } else {
-            $chamado->data_solucao = null; 
-        }
-
-        $chamado->save();
-
-        return redirect()->route('chamado.index')->with('success', 'Chamado atualizado com sucesso!');
-    }
-
     public function show(Chamado $chamado)
     {
-       
-        return view('chamados.show', compact('chamado'));
+        $situacoes = Situacao::all();
+        return view('chamados.show', compact('chamado', 'situacoes'));
     }
 
     public function destroy(Chamado $chamado)
@@ -80,5 +54,44 @@ class ChamadoController extends Controller
        return redirect()->route('chamado.index')->with('success', 'Conta excluida com sucesso');
     }
 
+    public function atualizarSituacao(Request $request, Chamado $chamado)
+    {
+        $request->validate([
+            'situacao_id' => 'required|exists:situacoes,id'
+        ]);
+    
+        $situacao = Situacao::find($request->situacao_id);
+    
+        $chamado->situacao_id = $situacao->id;
+        
+        if ($situacao->status == 'Resolvido') {
+            $chamado->data_solucao = now();
+        }elseif ($chamado->getOriginal('situacao_id') == Situacao::where('nome', 'Resolvido')->first()->id) {
+            $chamado->data_solucao = null;
+        }
 
+        $chamado->save();
+    
+        return redirect()->route('chamado.show', $chamado->id)
+                        ->with('success', 'Situação atualizada!');
+    }
+
+    public function percentual()
+    {
+        $inicioMes = now()->startOfMonth();
+        $fimMes = now()->endOfMonth();
+
+        $totalResolvidos = Chamado::where('situacao_id', Situacao::where('status', 'Resolvido')->first()->id)
+                       ->whereBetween('data_solucao', [$inicioMes, $fimMes])
+                       ->count();
+
+        $resolvidosPrazo = Chamado::where('situacao_id', Situacao::where('status', 'Resolvido')->first()->id)
+                         ->whereBetween('data_solucao', [$inicioMes, $fimMes])
+                         ->whereColumn('data_solucao', '<=', 'prazo_solucao')
+                         ->count();
+    
+        $percentualSLA = $totalResolvidos > 0 ? round(($resolvidosPrazo / $totalResolvidos) * 100, 2) : 0;
+
+        return view('welcome', ['percentualSLA' => $percentualSLA]);
+    }
 }

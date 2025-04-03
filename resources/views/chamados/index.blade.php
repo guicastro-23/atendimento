@@ -25,7 +25,9 @@
                     <th scope="col">ID</th>
                     <th scope="col">Titulo</th>
                     <th scope="col">Categoria</th>
+
                     <th scope="col">Situação</th>
+
                     <th scope="col">Data de Criação</th>
                     <th scope="col">Prazo de Solução</th>
                     <th scope="col">Data de Solução</th>
@@ -38,13 +40,13 @@
                             <th>{{ $chamado->id }}</th>
                             <td>{{ $chamado->titulo }}</td>
                             <td>{{ $chamado->categoria->tipo }}</td>
-                            <td>@mdo</td>
+                            <td>{{$chamado->situacao->status}}</td>
                             <td>{{\Carbon\Carbon::parse($chamado->data_criacao)->format('d/m/Y') }}</td>
                             <td>{{\Carbon\Carbon::parse($chamado->prazo_solucao)->format('d/m/Y') }}</td>
                             <td>{{\Carbon\Carbon::parse($chamado->data_solucao)->format('d/m/Y') }}</td>
                             <td class="d-md-flex justify-content-center">
                                 <a href="{{route('chamado.show', ['chamado' => $chamado->id])}}">
-                                    <button type="button" class="btn btn-primary bt-sm me-1">Visualizar</button>
+                                    <button type="button" class="btn btn-primary bt-sm me-1">Visualizar/Atender</button>
                                 </a>
                                 <form action="{{route('chamado.destroy', ['chamado' => $chamado->id])}}" method="POST">
                                     @csrf
@@ -61,32 +63,4 @@
             </table>  
         </div>
     </div>
-
-    @forelse ($chamados as $chamado)
-        <tr>
-            <td></td>
-            {{-- <td>{{ $chamado->descricao }}</td> --}}
-            <td></td>
-            <td>
-                <form action="{{ route('chamado.update', $chamado->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-
-                    <select name="situacao_id">
-                        <option value="pendente" {{ $chamado->situacao_id == 'pendente' ? 'selected' : '' }}>Pendente</option>
-                        <option value="resolvido" {{ $chamado->situacao_id == 'resolvido' ? 'selected' : '' }}>Resolvido</option>
-                    </select>
-
-                    <button type="submit">Salvar</button>
-                </form>
-
-               
-            </td>
-            <a href="{{route('chamado.show', ['chamado' => $chamado->id])}}">Visualizar</a>
-        </tr>
-        <hr>
-    @empty
-        <span style="color: #f00;"> Nenhum chamado encontrado!</span>
-     @endforelse 
-
 @endsection

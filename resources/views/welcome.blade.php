@@ -1,14 +1,42 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.admin')
 
-        <title>Atendimento</title>
+@section('content')
 
-    </head>
-    <body>
-        <h1>SLA</h1>
-        <a href="{{route('chamado.index')}}">Listar os Chamados</a>
-    </body>
-</html>
+<body>
+    
+
+    <div class="container mt-4">
+        <div class="row g-3">
+            <div class="col-md-2">
+                <div class="card text-center shadow-sm p-3">
+                    <div class="status fw-bold">Concluídos</div>
+                    <div class="percentual fs-4 text-success">79%</div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card text-center shadow-sm p-3">
+                    <div class="status fw-bold">Chamados Abertos</div>
+                    <div class="fs-4 text-primary">302</div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card text-center shadow-sm p-3">
+                    <div class="status fw-bold">Em Andamento</div>
+                    <div class="fs-4 text-warning">55</div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card text-center shadow-sm p-3">
+                    <div class="status fw-bold">Pendentes</div>
+                    <div class="fs-4 text-danger">4</div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card text-center shadow-sm p-3">
+                    <div class="status fw-bold">SLA</div> 
+                     <div class="fs-4 text-success">{{ $percentualSLA }}%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

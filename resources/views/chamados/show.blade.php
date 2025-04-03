@@ -11,7 +11,12 @@
                 </a>
             </span>
         </div>
-    
+
+        @if(session('success'))
+            <div class="alert alert-success m-3" role="alert">
+                {{session('success')}}
+            </div>
+        @endif
 
         <div class="card-body">
             <dl class="row">
@@ -33,7 +38,23 @@
             </dl>
             <dl class="row">
                 <dt class="col-sm-3">Situação:</dt>
-                <dd class="col-sm-9">{{$chamado->situacao->status}}<br></dd>
+                <dd class="col-sm-9">
+                <form action="{{ route('chamado.atualizar-situacao', $chamado->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('PUT')
+                    <div class="input-group input-group-sm" style="max-width: 200px;">
+                        <select name="situacao_id" class="form-select form-select-sm" style="width: auto;">
+                            @foreach($situacoes as $situacao)
+                                <option value="{{ $situacao->id }}" 
+                                    {{ $chamado->situacao_id == $situacao->id ? 'selected' : '' }}>
+                                    {{ $situacao->status }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-outline-primary ms-2">Atualizar</button>
+                    </div>
+                </form><br>
+                </dd>
             </dl>
 
             <dl class="row">
