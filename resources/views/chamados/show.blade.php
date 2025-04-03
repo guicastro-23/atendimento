@@ -11,16 +11,46 @@
                 </a>
             </span>
         </div>
-    </div>
     
-    <a href="{{route('chamado.index')}}">Listar</a>
-    <h2>Informações do Chamado</h2>
-    ID: {{$chamado->id}}<br>
-    Titulo: {{$chamado->titulo}}<br>
-    Categoria: {{$chamado->categoria->tipo}}<br>
-    Situação: {{$chamado->situacao->status}}<br>
-    Data de Criação: {{ \Carbon\Carbon::parse($chamado->data_criacao)->format('d/m/Y') }}<br>
-    Prazo de Solução: {{ \Carbon\Carbon::parse($chamado->prazo_solucao)->format('d/m/Y') }}<br>
-    Data de Solução: {{ \Carbon\Carbon::parse($chamado->data_solucao)->format('d/m/Y') }}<br>
+
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ID:</dt>
+                <dd class="col-sm-9">{{$chamado->id}}</dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-sm-3">Titulo:</dt>
+                <dd class="col-sm-9">{{$chamado->titulo}}</dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-sm-3">Categoria:</dt>
+                <dd class="col-sm-9">{{$chamado->categoria->tipo}}</dd>
+            </dl>
+
+            <dl class="row">
+                <dt class="col-sm-3">Descrição:</dt>
+                <dd class="col-sm-9">{{$chamado->descricao}}</dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-sm-3">Situação:</dt>
+                <dd class="col-sm-9">{{$chamado->situacao->status}}<br></dd>
+            </dl>
+
+            <dl class="row">
+                <dt class="col-sm-3">Data de Criação:</dt>
+                <dd class="col-sm-9"> {{ \Carbon\Carbon::parse($chamado->data_criacao)->format('d/m/Y') }}<br></dd>
+            </dl>
+
+            <dl class="row">
+                <dt class="col-sm-3">Prazo de Solução:</dt>
+                <dd class="col-sm-9">{{ \Carbon\Carbon::parse($chamado->prazo_solucao)->format('d/m/Y') }}<br></dd>
+            </dl>
+
+            <dl class="row">
+                <dt class="col-sm-3"> Data de Solução:</dt>
+                <dd class="col-sm-9">{{ \Carbon\Carbon::parse($chamado->data_solucao)->format('d/m/Y') }}<br></dd>
+            </dl>
+        </div>
+    </div>
 @endsection
     

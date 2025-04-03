@@ -12,6 +12,12 @@
             </span>
         </div>
 
+        @if (session('success'))
+            <div class="alert alert-success m-3" role="alert">
+                {{session('success')}}
+            </div>
+        @endif
+
         <div class="card-body">
             <table class="table">
                 <thead>
@@ -23,7 +29,7 @@
                     <th scope="col">Data de Criação</th>
                     <th scope="col">Prazo de Solução</th>
                     <th scope="col">Data de Solução</th>
-                    <th scope="col">Ações</th>
+                    <th scope="col" class="text-center">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -56,11 +62,6 @@
         </div>
     </div>
 
-    @if (session('success'))
-        <p style="color: #082;">
-            {{session('success')}}
-        </p>
-    @endif
     @forelse ($chamados as $chamado)
         <tr>
             <td></td>

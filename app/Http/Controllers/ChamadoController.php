@@ -12,7 +12,7 @@ class ChamadoController extends Controller
     public function index()
     {
         // Listar os registros de chamados
-        $chamados = Chamado::orderByDesc('created_at')->get();
+        $chamados = Chamado::orderBy('created_at')->get();
         $situacoes = Situacao::all();
         return view('chamados.index', compact('chamados', 'situacoes'));
     }
@@ -38,7 +38,7 @@ class ChamadoController extends Controller
         $validated['data_criacao'] = now();
 
         Chamado::create($validated);
-        return redirect()->route('chamados.index')->with('success', 'Chamado criado com sucesso!');
+        return redirect()->route('chamado.index')->with('success', 'Chamado criado com sucesso!');
 
     }
 
@@ -56,7 +56,7 @@ class ChamadoController extends Controller
         // Atualiza a situação
         $chamado->situacao_id = $situacao->id;
 
-        // Se for resolvido, preenche a data de solução
+     
         if ($situacao->status === 'Resolvido') {
             $chamado->data_solucao = now();
         } else {

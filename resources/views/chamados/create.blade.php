@@ -1,33 +1,66 @@
 @extends('layouts.admin')
+
 @section('content')
-    
-    <a href="{{route('chamado.index')}}">Listar</a>
-    <h2>   Cadastra chamado</h2>
-    <form action="{{route('chamado.store')}}" method="POST">
-        @csrf
-        <label>Titulo: </label>
-        <input type="text" name="titulo" id="titulo" placeholder="Digite o Titulo"><br>
 
-        <label for="categoria_id">Categoria: </label>
-        <select name="categoria_id" id="categoria" required>
-            <option value="" disabled selected>Selecione uma categoria</option>
-            @foreach ($categorias as $categoria)
-                <option value="{{$categoria->id}}"> {{ $categoria->tipo }}</option>
-            @endforeach
-        </select>
+    <div class="card mt-4 mb-4 border-light shadow">
+        <div class="card-header d-flex justify-content-between">
+            <span>Novo Chamado</span>
+            <span>
+                <a href="{{route('chamado.index')}}">
+                    <button type="button" class="btn btn-info btn-sm">Listar</button>
+                </a>
+            </span>
+        </div>
 
-        <label for="descricao">Descrição: </label>
-        <textarea name="descricao" id="descricao" rows="4" placeholder="Descreva o chamado" required> </textarea>
+        @if(session('success'))
+            <div class="alert alert-success m-3" role="alert">
+                {{session('sucess')}}
+            </div>
+        @endif
 
-        <label for="prazo_solucao">Prazo de Solução:</label>
-        <input type="date" name="prazo_solucao" id="prazo_solucao" readonly>
+        <div class="card-body">
+            <form action="{{route('chamado.store')}}" method="POST" class="row g-3">
+                @csrf
 
-        <input type="hidden" name="data_criacao" value="{{ now()->format('Y-m-d') }}">
-        <input type="hidden" name="situacao_id" value="{{ $situacaoInicial->id }}">
+                <div class="col-12">
+                <label for="titulo" class="form-label">Titulo </label>
+                    <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Digite o Titulo"><br>
+                </div>
 
-        <button type="submit">Cadastrar Chamado</button>
+                <div class="col-12">
+                    <label for="categoria_id" class="form-label">Categoria</label>
+                    <select name="categoria_id" id="categoria" class="form-control" required>
+                        <option value="" disabled selected>Selecione uma categoria</option>
+                        @foreach ($categorias as $categoria)
+                            <option value="{{$categoria->id}}"> {{ $categoria->tipo }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-    </form>
+                <div class="col-12">
+                    <label for="descricao" class="form-label">Descrição </label>
+                    <textarea name="descricao" id="descricao" class="form-control"   rows="4" placeholder="Descreva o chamado" required> </textarea>
+                </div>
+
+                <div class="col-12">
+                    <label for="prazo_solucao" class="form-label">Prazo de Solução:</label>
+                    <input type="date" name="prazo_solucao" id="prazo_solucao" class="form-control"  readonly>
+                </div>
+
+                <div class="col-12">
+                    <input type="hidden" name="data_criacao" value="{{ now()->format('Y-m-d') }}">
+                    <input type="hidden" name="situacao_id" value="{{ $situacaoInicial->id }}">
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success btn-sm">Cadastrar Chamado</button>
+                </div>
+                
+        
+            </form>
+        </div>
+    </div>
+   
 
     <script>
        
