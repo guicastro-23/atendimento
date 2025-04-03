@@ -14,6 +14,7 @@ class ChamadoController extends Controller
         // Listar os registros de chamados
         $chamados = Chamado::orderBy('created_at')->get();
         $situacoes = Situacao::all();
+        
         return view('chamados.index', compact('chamados', 'situacoes'));
     }
 
@@ -66,7 +67,7 @@ class ChamadoController extends Controller
         
         if ($situacao->status == 'Resolvido') {
             $chamado->data_solucao = now();
-        }elseif ($chamado->getOriginal('situacao_id') == Situacao::where('nome', 'Resolvido')->first()->id) {
+        }elseif ($chamado->getOriginal('situacao_id') == Situacao::where('status', 'Resolvido')->first()->id) {
             $chamado->data_solucao = null;
         }
 
@@ -92,6 +93,14 @@ class ChamadoController extends Controller
     
         $percentualSLA = $totalResolvidos > 0 ? round(($resolvidosPrazo / $totalResolvidos) * 100, 2) : 0;
 
-        return view('welcome', ['percentualSLA' => $percentualSLA]);
+        
+        $resolvidos = Chamado::where('situacao_id', 3)->count();
+        $abertos= Chamado::where('situacao_id', 1)->count();
+        $pendentes = Chamado::where('situacao_id', 2)->count();
+
+        return view('welcome', ['percentualSLA' => $percentualSLA, 'resolvidos' => $resolvidos,
+                    'abertos' =>$abertos, 'pendentes' => $pendentes]);
     }
+
+    
 }
